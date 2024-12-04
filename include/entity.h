@@ -1,5 +1,9 @@
 #pragma once
 
+#include <vector>
+#include <memory>
+#include <iostream>
+
 #include "raylib.h"
 
 struct Entity {
@@ -14,12 +18,16 @@ struct Entity {
 	virtual void init() = 0;
 	virtual void update() = 0;
 	virtual void draw() = 0;
+
+	virtual ~Entity() = default;
 };
 
 struct Jinx : Entity {
+	Jinx();
 	void init() override;
 	void update() override;
 	void draw() override;
+	~Jinx();
 };
 
 struct Enforcer : Entity {

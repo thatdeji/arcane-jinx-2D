@@ -4,15 +4,14 @@
 #include "utils.h"
 #include "entity.h"
 
-
 int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
 	InitWindow(screenWidth, screenHeight, "Arcane: Jinx's arc");
 	SearchAndSetResourceDir("resource");
 
-	Jinx jinx;
-	jinx.init();
+	EntityManager eManager;
+	eManager.addEntity<Jinx>();
 
 	SetTargetFPS(60);
 
@@ -21,12 +20,9 @@ int main() {
 		ClearBackground(RAYWHITE);
 		DrawText("This is Jinx's arc", 200, 200, 20, DARKPURPLE);
 
-		if (IsKeyDown(KEY_RIGHT)) jinx.mPosition.x += 2.0f;
-		if (IsKeyDown(KEY_LEFT)) jinx.mPosition.x -= 2.0f;
-		if (IsKeyDown(KEY_UP)) jinx.mPosition.y -= 2.0f;
-		if (IsKeyDown(KEY_DOWN)) jinx.mPosition.y += 2.0f;
+		eManager.updateEntities();
+		eManager.drawEntities();
 
-		DrawTexture(jinx.mTexture, jinx.mPosition.x, jinx.mPosition.y, WHITE);
 		EndDrawing();
 
 		if (WindowShouldClose()) {
@@ -36,7 +32,6 @@ int main() {
 		}
 	}
 
-	UnloadTexture(jinx.mTexture);
 	CloseWindow();
 	return 0;
 }
