@@ -12,7 +12,7 @@ struct EntityManager {
 	template <typename T>
 	void addEntity() {
 		T* c(new T());
-		std::unique_ptr<Entity> entityPtr{ c};
+		std::unique_ptr<Entity> entityPtr{ c };
 		mEntities.emplace_back(std::move(entityPtr));
 		c->init();
 	}
