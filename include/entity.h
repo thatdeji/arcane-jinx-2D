@@ -10,10 +10,10 @@ struct Entity {
 	Texture mTexture;
 	Vector2 mPosition;
 
-	const int mFramesSpeed = 8;
-	int mFramesCounter = 0;
-
-	Rectangle frmeRec = { 0.0f, 0.0f, 0.0f, 0.0f };
+	Rectangle mFrameRec = { 0.0f, 0.0f, 0.0f, 0.0f };
+	const size_t mFramesSpeed = 8;
+	size_t mFramesCounter = 0;
+	size_t mCurrentFrame = 0;
 
 	virtual void init() = 0;
 	virtual void update() = 0;
@@ -23,11 +23,20 @@ struct Entity {
 };
 
 struct Jinx : Entity {
+	enum class State{
+		WALKING,
+		RUNNING,
+	};
+	
 	Jinx();
 	void init() override;
 	void update() override;
 	void draw() override;
 	~Jinx();
+
+	// Member variables
+	size_t mFramesCount = 1;
+	State mCurrentState = State::WALKING;
 };
 
 struct Enforcer : Entity {
