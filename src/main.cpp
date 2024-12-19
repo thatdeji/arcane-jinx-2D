@@ -3,6 +3,7 @@
 #include "resource_dir.h"
 #include "utils.h"
 #include "entity.h"
+#include "game.h"
 
 int main() {
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
@@ -10,18 +11,17 @@ int main() {
 	InitWindow(screenWidth, screenHeight, "Arcane: Jinx's arc");
 	SearchAndSetResourceDir("resource");
 
-	EntityManager eManager;
-	eManager.addEntity<Jinx>();
+	Game game;
+	game.init();
 
 	SetTargetFPS(60);
 
 	while (true) {
 		BeginDrawing();
-		ClearBackground(RAYWHITE);
-		DrawText("This is Jinx's arc", 200, 200, 20, DARKPURPLE);
 
-		eManager.updateEntities();
-		eManager.drawEntities();
+			game.update();
+
+			game.draw();
 
 		EndDrawing();
 

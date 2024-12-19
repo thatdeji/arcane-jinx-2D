@@ -14,7 +14,7 @@ Jinx::~Jinx() {
 
 void Jinx::init() {
 	mTexture = LoadTexture("JINXc.png");
-	mPosition = { (float)screenWidth / 3, (float)screenHeight / 2 };
+	mPosition = { 10.0f, 400.0f };
 	mFrameRec = { 0.0f, 0.0f, (float)mTexture.width / 6, (float)mTexture.height / 2 };
 	mCurrentState = State::WALKING;
 }
@@ -41,6 +41,12 @@ void Jinx::update() {
 			mFramesCount = 6;
 			mCurrentFrame = 0;
 		}
+	}
+	else if (IsKeyDown(KEY_DOWN)) {
+		mPosition.y += 10.0f;
+	}
+	else if (IsKeyDown(KEY_UP)) {
+		mPosition.y -= 10.0f;
 	}
 	else {
 		// Standing stance

@@ -9,6 +9,8 @@
 struct Entity {
 	Texture mTexture;
 	Vector2 mPosition;
+	Vector2 mVelocity; // x = l-r velocity, y = up-down velocity
+	Vector2 mAcceleration; // x = l-r acceleration, y = up-down acceleration
 
 	Rectangle mFrameRec = { 0.0f, 0.0f, 0.0f, 0.0f };
 	const size_t mFramesSpeed = 8;
