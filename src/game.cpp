@@ -6,24 +6,31 @@
 void Game::init() {
 	mBackground.mTexture = LoadTexture("midgroundd.png");
 
-	jinx.init();
+	eManager.addEntity<Jinx>();
 	
-	mCamera.target = { jinx.mPosition.x, jinx.mPosition.y};
-	mCamera.offset = { screenWidth / 2.0f, screenHeight / 2.0f };
+	assert(eManager.mEntities.size() == 1);
+	
+	mCamera.target = { 
+		eManager.mEntities[0]->entityCam.mTarget.x,
+		eManager.mEntities[0]->entityCam.mTarget.y
+	};
+	mCamera.offset = { screenWidth/2.0f, screenHeight/2.0f };
 	mCamera.rotation = 0.0f;
 	mCamera.zoom = 1.0f;
 }
 
 void Game::update() {
-	jinx.update();
 	eManager.updateEntities();
+	mCamera.target = {
+		eManager.mEntities[0]->entityCam.mTarget.x,
+		eManager.mEntities[0]->entityCam.mTarget.y
+	};
 }
 
 void Game::draw() {
 	BeginMode2D(mCamera);
-		DrawTextureEx(mBackground.mTexture, { 0.0f, -200.0f }, 0.0f, 1.0f, WHITE);
+		DrawTextureEx(mBackground.mTexture, { 0.0f, 0.0f }, 0.0f, 1.0f, WHITE);
 		eManager.drawEntities();
-		jinx.draw();
 	EndMode2D();
 }
 

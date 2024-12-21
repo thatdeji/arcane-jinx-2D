@@ -18,6 +18,8 @@ int main() {
 
 	while (true) {
 		BeginDrawing();
+			
+			ClearBackground({ 13, 21, 24 });
 
 			game.update();
 

@@ -6,7 +6,14 @@
 
 #include "raylib.h"
 
+struct EntityCam {
+	Vector2 mPanSpeed = { 15.0f, 15.0f };
+	Vector2 mTarget;
+};
+
 struct Entity {
+	EntityCam entityCam;
+
 	Texture mTexture;
 	Vector2 mPosition;
 	Vector2 mVelocity; // x = l-r velocity, y = up-down velocity
@@ -15,7 +22,7 @@ struct Entity {
 	Rectangle mFrameRec = { 0.0f, 0.0f, 0.0f, 0.0f };
 	const size_t mFramesSpeed = 8;
 	size_t mFramesCounter = 0;
-	size_t mCurrentFrame = 0;
+	size_t mCurrFrame = 0;
 
 	virtual void init() = 0;
 	virtual void update() = 0;
@@ -26,8 +33,14 @@ struct Entity {
 
 struct Jinx : Entity {
 	enum class State{
+		STANDING,
 		WALKING,
 		RUNNING,
+	};
+
+	enum class Direction {
+		LEFT,
+		RIGHT,
 	};
 	
 	Jinx();
@@ -37,8 +50,10 @@ struct Jinx : Entity {
 	~Jinx();
 
 	// Member variables
-	size_t mFramesCount = 1;
-	State mCurrentState = State::WALKING;
+	size_t mFramesCount;
+	State mCurrState;
+	Direction mCurrDir;
+	Direction mPrevDir;
 };
 
 struct Enforcer : Entity {
