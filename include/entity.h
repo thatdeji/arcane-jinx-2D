@@ -49,8 +49,11 @@ struct Jinx : Entity {
 	void draw() override;
 	~Jinx();
 
+
+
 	// Member variables
 	size_t mFramesCount;
+	size_t mSheetWidth;
 	State mCurrState;
 	Direction mCurrDir;
 	Direction mPrevDir;

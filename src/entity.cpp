@@ -26,16 +26,14 @@ void Jinx::init() {
 
 void Jinx::update() {
 	if (IsKeyPressed(KEY_RIGHT)) {
-		;
-	}
-	if (IsKeyDown(KEY_RIGHT)) {
 		mPosition.x += 10.0f;
 
-		if (mCurrState != State::RUNNING) {
-			mCurrState = State::RUNNING;
+		if (mCurrState != State::WALKING) {
+			mCurrState = State::WALKING;
 			mFrameRec.x = 0.0f;
-			mFrameRec.y = mTexture.height / 2.0f;
-			mFramesCount = 6;
+			mFrameRec.y = 0.0f;
+			mFramesCount = 2;
+			mSheetWidth = mTexture.width * mFramesCount / 6.0f;
 			mCurrFrame = 0;
 		}
 
@@ -48,7 +46,49 @@ void Jinx::update() {
 
 		mFrameRec.width = (mFrameRec.width < 0 ? mFrameRec.width * -1.0f : mFrameRec.width);
 	}
-	if (IsKeyDown(KEY_LEFT)) {
+	else if (IsKeyDown(KEY_RIGHT)) {
+		mPosition.x += 10.0f;
+	
+		if (mCurrState != State::RUNNING) {
+			mCurrState = State::RUNNING;
+			mFrameRec.x = 0.0f;
+			mFrameRec.y = mTexture.height / 2.0f;
+			mFramesCount = 6;
+			mSheetWidth = mTexture.width;
+			mCurrFrame = 0;
+		}
+	
+		entityCam.mTarget.x += entityCam.mPanSpeed.x;
+		if (entityCam.mTarget.x > mPosition.x + 300.0f) {
+			entityCam.mTarget.x = mPosition.x + 300.0f;
+		}
+	
+		entityCam.mTarget = { entityCam.mTarget.x, mPosition.y };
+	
+		mFrameRec.width = (mFrameRec.width < 0 ? mFrameRec.width * -1.0f : mFrameRec.width);
+	}
+	if (IsKeyPressed(KEY_LEFT)) {
+		mPosition.x -= 10.0f;
+
+		if (mCurrState != State::WALKING) {
+			mCurrState = State::WALKING;
+			mFrameRec.x = 0.0f;
+			mFrameRec.y = 0.0f;
+			mFramesCount = 2;
+			mSheetWidth = mTexture.width * mFramesCount / 6.0f;
+			mCurrFrame = 0;
+		}
+
+		entityCam.mTarget.x -= entityCam.mPanSpeed.x;
+		if (entityCam.mTarget.x < mPosition.x - 70.0f) {
+			entityCam.mTarget.x = mPosition.x - 70.0f;
+		}
+
+		entityCam.mTarget = { entityCam.mTarget.x, mPosition.y };
+
+		mFrameRec.width = (mFrameRec.width < 0 ? mFrameRec.width : mFrameRec.width * -1.0f);
+	}
+	else if (IsKeyDown(KEY_LEFT)) {
 		mPosition.x -= 10.0f;
 
 		if (mCurrState != State::RUNNING) {
@@ -56,12 +96,13 @@ void Jinx::update() {
 			mFrameRec.x = 0.0f;
 			mFrameRec.y = mTexture.height / 2.0f;
 			mFramesCount = 6;
+			mSheetWidth = mTexture.width;
 			mCurrFrame = 0;
 		}
 
 		entityCam.mTarget.x -= entityCam.mPanSpeed.x;
-		if (entityCam.mTarget.x < mPosition.x - 70.0f) {
-			entityCam.mTarget.x = mPosition.x - 70.0f;
+		if (entityCam.mTarget.x < mPosition.x - 123.0f) {
+			entityCam.mTarget.x = mPosition.x - 123.0f;
 		}
 
 		entityCam.mTarget = { entityCam.mTarget.x, mPosition.y };
@@ -94,7 +135,7 @@ void Jinx::update() {
 		mCurrFrame++;
 
 		if (mCurrFrame > (mFramesCount - 1)) mCurrFrame = 0;
-		mFrameRec.x = (float)mCurrFrame * (float)mTexture.width / mFramesCount;
+		mFrameRec.x = (float)mCurrFrame * (float)mSheetWidth / mFramesCount;
 	}
 }
 
