@@ -20,7 +20,7 @@ struct Entity {
 	Vector2 mAcceleration; // x = l-r acceleration, y = up-down acceleration
 
 	Rectangle mFrameRec = { 0.0f, 0.0f, 0.0f, 0.0f };
-	const size_t mFramesSpeed = 3;
+	size_t mFramesSpeed = 8;
 	size_t mFramesCounter = 0;
 	size_t mCurrFrame = 0;
 
@@ -34,7 +34,6 @@ struct Entity {
 struct Jinx : Entity {
 	enum class State{
 		STANDING,
-		WALKING,
 		RUNNING,
 	};
 	
